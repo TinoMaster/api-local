@@ -1,4 +1,3 @@
-
 const express = require("express"),
   router = express.Router(),
   loginController = require("../controllers/login-controllers"),
@@ -7,5 +6,6 @@ const express = require("express"),
 router.use(cors());
 
 router.post("/login", loginController.getUsuario);
+router.post("/registro", loginController.postUsuario);
 
 module.exports = router;

@@ -4,7 +4,7 @@ const loginControllers = () => {};
 
 loginControllers.getUsuario = (req, res) => {
   let data = {
-    usuario: req.body.usuario,
+    nombre: req.body.nombre,
     contraseña: req.body.contraseña,
   };
   loginModels.getusuario(data, (docs) => {
@@ -17,6 +17,15 @@ loginControllers.getUsuario = (req, res) => {
     } else {
       console.log("incorrecta");
     }
+  });
+};
+
+loginControllers.postUsuario = (req, res) => {
+  let data = req.body;
+  console.log(data);
+
+  loginModels.postUsuario(data, () => {
+    res.send(console.log("Usuario creado correctamente"));
   });
 };
 

@@ -3,11 +3,18 @@ const loginConecction = require("./login-connection");
 const loginModel = () => {};
 
 loginModel.getusuario = (data, cb) => {
-  loginConecction.find({ usuario: data.usuario }).exec((err, doc) => {
+  loginConecction.find({ nombre: data.nombre }).exec((err, doc) => {
     if (err) throw err;
     else {
       cb(doc);
     }
+  });
+};
+
+loginModel.postUsuario = (data, cb) => {
+  loginConecction.create(data, (err) => {
+    if (err) throw err;
+    cb();
   });
 };
 
