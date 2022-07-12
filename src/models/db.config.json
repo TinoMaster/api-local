@@ -1,6 +1,6 @@
 {
   "mongo": {
-    "host": "localhost",
+    "host": "db",
     "db": "my_app_sv"
   }
 }

@@ -25,7 +25,7 @@ InventarioController.save = (req, res) => {
   let data = req.body;
 
   InventarioModel.save(data, _id, () => {
-    res.send(console.log("Exitoso"));
+    res.send(console.log("Exitoso!!!"));
   });
 };
 
