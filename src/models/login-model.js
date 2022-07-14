@@ -2,6 +2,15 @@ const loginConecction = require("./login-connection");
 
 const loginModel = () => {};
 
+loginModel.getAdmin = (cb) => {
+  loginConecction.find().exec((err, doc) => {
+    if (err) throw err;
+    else {
+      cb(doc);
+    }
+  });
+};
+
 loginModel.getusuario = (data, cb) => {
   loginConecction.find({ nombre: data.nombre }).exec((err, doc) => {
     if (err) throw err;

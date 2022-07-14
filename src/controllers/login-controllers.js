@@ -2,6 +2,16 @@ const loginModels = require("../models/login-model");
 
 const loginControllers = () => {};
 
+loginControllers.getAdmin = (req, res) => {
+  loginModels.getAdmin((docs) => {
+    if (docs.length > 0) {
+      res.json(docs);
+    } else {
+      console.log("No hay registros");
+    }
+  });
+};
+
 loginControllers.getUsuario = (req, res) => {
   let data = {
     nombre: req.body.nombre,

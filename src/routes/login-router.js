@@ -7,5 +7,6 @@ router.use(cors());
 
 router.post("/login", loginController.getUsuario);
 router.post("/registro", loginController.postUsuario);
+router.get("/admin", loginController.getAdmin);
 
 module.exports = router;
