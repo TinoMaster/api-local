@@ -7,7 +7,7 @@ loginControllers.getAdmin = (req, res) => {
     if (docs.length > 0) {
       res.json(docs);
     } else {
-      console.log("No hay registros");
+     console.log("no");
     }
   });
 };

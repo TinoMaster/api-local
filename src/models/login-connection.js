@@ -1,6 +1,6 @@
 const mongoose = require("mongoose"),
   Schema = mongoose.Schema,
-  dbconfig = require("./db.config.json");
+  dbConfig = require("./db.config.json");
 
 const loginSchema = new Schema({
   nombre: String,
@@ -10,6 +10,7 @@ const loginSchema = new Schema({
 
 const loginModel = mongoose.model("Login", loginSchema);
 
-mongoose.connect("mongodb://" + dbconfig.mongo.host + "/" + dbconfig.mongo.db);
+console.log(`mongodb://${dbConfig.mongo.host}/${dbConfig.mongo.db}`);
+mongoose.connect(`mongodb://${dbConfig.mongo.host}/${dbConfig.mongo.db}`);
 
 module.exports = loginModel;

@@ -21,6 +21,6 @@ const cuadreSchema = new Shema({
 });
 
 const CuadreModel = mongoose.model("Cuadre", cuadreSchema);
-mongoose.connect("mongodb://" + dbConfig.mongo.host + "/" + dbConfig.mongo.db);
+mongoose.connect(`mongodb://${dbConfig.mongo.host}/${dbConfig.mongo.db}`);
 
 module.exports = CuadreModel;

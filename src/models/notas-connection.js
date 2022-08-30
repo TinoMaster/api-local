@@ -15,6 +15,6 @@ const notaSchema = new Schema({
 });
 
 const notasModel = mongoose.model("Notas", notaSchema);
-mongoose.connect("mongodb://" + dbConfig.mongo.host + "/" + dbConfig.mongo.db);
+mongoose.connect(`mongodb://${dbConfig.mongo.host}/${dbConfig.mongo.db}`);
 
 module.exports = notasModel;

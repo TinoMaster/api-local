@@ -12,6 +12,6 @@ const testInyectoresModel = mongoose.model(
   "testInyectores",
   testInyectoresSchema
 );
-mongoose.connect("mongodb://" + dbConfig.mongo.host + "/" + dbConfig.mongo.db);
+mongoose.connect(`mongodb://${dbConfig.mongo.host}/${dbConfig.mongo.db}`);
 
 module.exports = testInyectoresModel;

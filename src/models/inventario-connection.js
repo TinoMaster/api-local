@@ -15,6 +15,6 @@ const inventarioSchema = new Schema({
 });
 
 const inventarioModel = mongoose.model("Inventario", inventarioSchema);
-mongoose.connect("mongodb://" + dbConfig.mongo.host + "/" + dbConfig.mongo.db);
+mongoose.connect(`mongodb://${dbConfig.mongo.host}/${dbConfig.mongo.db}`);
 
 module.exports = inventarioModel;
