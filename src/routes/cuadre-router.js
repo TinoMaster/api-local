@@ -4,7 +4,7 @@ const express = require("express"),
   CuadreController = require("../controllers/cuadre-controllers"),
   cors = require("cors");
 
-const whiteList = "http://localhost:3000";
+/* const whiteList = "http://localhost:3000";
 
 let corsOptions = {
   origin: (origin, callback) => {
@@ -14,7 +14,7 @@ let corsOptions = {
       callback(new Error("no allowed by cors"));
     }
   },
-};
+}; */
 
 router.use(cors());
 /* General */

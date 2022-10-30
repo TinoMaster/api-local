@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "aws-sdk": "^2.1243.0",
     "body-parser": "1.19.1",
     "cors": "2.8.5",
     "D": "1.0.0",
@@ -21,7 +22,8 @@
     "serve-favicon": "2.5.0"
   },
   "devDependencies": {
-    "nodemon": "^2.0.19",
-    "morgan": "1.10.0"
+    "dotenv": "^16.0.3",
+    "morgan": "1.10.0",
+    "nodemon": "^2.0.19"
   }
 }
