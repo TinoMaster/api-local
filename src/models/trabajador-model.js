@@ -8,10 +8,30 @@ trabajadorModel.getAll = (cb) => {
   });
 };
 
+trabajadorModel.updateOne = (data, cb) => {
+  trabajadorConnection.findOneAndUpdate({ _id: data._id }, data, (error) => {
+    try {
+      cb(null, data);
+      if (error) throw error;
+    } catch (error) {
+      console.log(error);
+      cb(error, null);
+    }
+  });
+};
+
 trabajadorModel.saveWorker = (data, cb) => {
   trabajadorConnection.create(data, (err) => {
-    if (err) throw err;
-    cb(data);
+    try {
+      if (err) {
+        cb(err, null);
+        throw err;
+      } else {
+        cb(null, data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   });
 };
 

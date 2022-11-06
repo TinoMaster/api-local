@@ -1,6 +1,6 @@
 const mongoose = require("mongoose"),
   Schema = mongoose.Schema,
-  dbConfig = require("./db.config.json");
+  dbConfig = require("./db.config");
 
 const notaSchema = new Schema({
   id: {
@@ -15,6 +15,6 @@ const notaSchema = new Schema({
 });
 
 const notasModel = mongoose.model("Notas", notaSchema);
-mongoose.connect(`mongodb://${dbConfig.mongo.host}/${dbConfig.mongo.db}`);
+mongoose.connect(`${dbConfig.mongoHost}/${dbConfig.mongoDb}`);
 
 module.exports = notasModel;

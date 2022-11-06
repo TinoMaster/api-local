@@ -1,6 +1,6 @@
 const mongoose = require("mongoose"),
   Shema = mongoose.Schema,
-  dbConfig = require("./db.config.json");
+  dbConfig = require("./db.config");
 
 const cuadreSchema = new Shema({
   id: {
@@ -21,6 +21,6 @@ const cuadreSchema = new Shema({
 });
 
 const CuadreModel = mongoose.model("Cuadre", cuadreSchema);
-mongoose.connect(`mongodb://${dbConfig.mongo.host}/${dbConfig.mongo.db}`);
+mongoose.connect(`${dbConfig.mongoHost}/${dbConfig.mongoDb}`);
 
 module.exports = CuadreModel;

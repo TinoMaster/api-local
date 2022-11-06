@@ -1,6 +1,6 @@
 const mongoose = require("mongoose"),
   Schema = mongoose.Schema,
-  dbConfig = require("./db.config.json");
+  dbConfig = require("./db.config");
 
 const testInyectoresSchema = new Schema({
   bn: Number,
@@ -12,6 +12,6 @@ const testInyectoresModel = mongoose.model(
   "testInyectores",
   testInyectoresSchema
 );
-mongoose.connect(`mongodb://${dbConfig.mongo.host}/${dbConfig.mongo.db}`);
+mongoose.connect(`${dbConfig.mongoHost}/${dbConfig.mongoDb}`);
 
 module.exports = testInyectoresModel;

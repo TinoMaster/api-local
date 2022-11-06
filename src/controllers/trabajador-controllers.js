@@ -20,6 +20,20 @@ trabajadorController.getAll = (req, res) => {
   trabajadorModel.getAll((docs) => res.send(docs));
 };
 
+trabajadorController.updateOne = (req, res) => {
+  const data = req.body;
+  trabajadorModel.updateOne(data, (error, docs) => {
+    if (error) {
+      res.send(error);
+    } else {
+      res.json({
+        success: true,
+        data: docs,
+      });
+    }
+  });
+};
+
 trabajadorController.saveImage = async (req, res) => {
   const { image } = req.files;
 
@@ -50,8 +64,18 @@ trabajadorController.saveWorker = (req, res) => {
   console.log(req.body);
   console.log(newData);
 
-  trabajadorModel.saveWorker(newData, (docs) => {
-    res.json(docs);
+  trabajadorModel.saveWorker(newData, (error, docs) => {
+    if (error) {
+      res.json({
+        error: true,
+        message: "Error de conexion",
+      });
+    } else {
+      res.json({
+        success: true,
+        message: "Trabajador creado",
+      });
+    }
   });
 };
 

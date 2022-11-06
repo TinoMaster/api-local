@@ -1,6 +1,6 @@
 const mongoose = require("mongoose"),
   Schema = mongoose.Schema,
-  dbConfig = require("./db.config.json");
+  dbConfig = require("./db.config");
 
 const trabajadorSchema = new Schema(
   {
@@ -22,6 +22,6 @@ const trabajadorSchema = new Schema(
 
 const trabajadorModel = mongoose.model("trabajadores", trabajadorSchema);
 
-mongoose.connect(`mongodb://${dbConfig.mongo.host}/${dbConfig.mongo.db}`);
+mongoose.connect(`${dbConfig.mongoHost}/${dbConfig.mongoDb}`);
 
 module.exports = trabajadorModel;

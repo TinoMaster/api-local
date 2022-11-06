@@ -7,6 +7,7 @@ const trabajadorController = require("../controllers/trabajador-controllers");
 router.use(cors());
 
 router.get("/trabajadores", trabajadorController.getAll);
+router.put("/trabajadores/update", trabajadorController.updateOne);
 
 router.post("/trabajadores/registro/image", trabajadorController.saveImage);
 
