@@ -2,13 +2,16 @@ const CuadreModels = require("../models/cuadre-models");
 
 const CuadreController = () => {};
 
-CuadreController.getAll = (req, res) => {
-  CuadreModels.getAll((docs) => {
-    res.send(docs);
+CuadreController.getAll = (req, res, next) => {
+  CuadreModels.getAll((error, docs) => {
+    if (error) {
+      res.send(error.output.payload);
+      next(error);
+    } else res.json(docs);
   });
 };
 
-CuadreController.save = (req, res) => {
+CuadreController.save = (req, res, next) => {
   console.log(req.body);
   let data = {
     id: req.body.id,
@@ -21,8 +24,12 @@ CuadreController.save = (req, res) => {
     turno: req.body.turno,
     dueño: req.body.dueño,
   };
-  CuadreModels.save(data, () => {
-    res.send(console.log("se ah introducido el dato"));
+  CuadreModels.save(data, (error, docs) => {
+    if (error) {
+      res.send(error.output.payload);
+      next(error);
+    }
+    res.json(docs);
   });
 };
 
@@ -95,7 +102,7 @@ CuadreController.getPorAño = (req, res) => {
   let fecha3 = parseInt(`${año}1001`);
   let fecha4 = parseInt(`${año}1131`);
 
-  CuadreModels.getPorAño(fecha1, fecha2,fecha3,fecha4, (docs) => {
+  CuadreModels.getPorAño(fecha1, fecha2, fecha3, fecha4, (docs) => {
     res.json(docs);
   });
 };

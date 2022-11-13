@@ -11,10 +11,9 @@ trabajadorModel.getAll = (cb) => {
 trabajadorModel.updateOne = (data, cb) => {
   trabajadorConnection.findOneAndUpdate({ _id: data._id }, data, (error) => {
     try {
-      cb(null, data);
       if (error) throw error;
+      cb(null, data);
     } catch (error) {
-      console.log(error);
       cb(error, null);
     }
   });
@@ -33,6 +32,35 @@ trabajadorModel.saveWorker = (data, cb) => {
       console.log(error);
     }
   });
+};
+
+trabajadorModel.verifyPassword = (id, cb) => {
+  try {
+    trabajadorConnection.find({ _id: id }).exec((error, docs) => {
+      if (error) {
+        throw error;
+      } else {
+        cb(null, docs);
+      }
+    });
+  } catch (error) {
+    cb(error, null);
+  }
+};
+
+trabajadorModel.changePassword = (data, cb) => {
+  const { id, password } = data;
+  try {
+    trabajadorConnection.findOneAndUpdate({ _id: id }, password, (err) => {
+      if (err) {
+        throw err;
+      } else {
+        cb(null, data);
+      }
+    });
+  } catch (error) {
+    cb(error, null);
+  }
 };
 
 module.exports = trabajadorModel;

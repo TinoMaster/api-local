@@ -1,23 +1,36 @@
 const cuadreConnections = require("./cuadre-connection");
 const CuadreModel = () => {};
 
+const boom = require("@hapi/boom");
+
 CuadreModel.getAll = (cb) => {
   cuadreConnections.find().exec((err, docs) => {
-    if (err) throw err;
-    cb(docs);
+    try {
+      if (err) {
+        throw boom.clientTimeout("Database Error");
+      }
+      cb(null, docs);
+    } catch (error) {
+      cb(error, null);
+    }
   });
 };
 
 CuadreModel.save = (data, cb) => {
   cuadreConnections.countDocuments({ id: data.id }).exec((err, count) => {
-    if (err) throw err;
-    if (count === 0) {
-      cuadreConnections.create(data, (err) => {
-        if (err) throw err;
-        cb();
-      });
-    } else if (count === 1) {
-      console.log("El dia ya existe");
+    try {
+      if (err) throw boom.clientTimeout("Database Error");
+
+      if (count === 0) {
+        cuadreConnections.create(data, (err) => {
+          if (err) throw boom.clientTimeout("Database Error");
+          else cb(null, data);
+        });
+      } else if (count === 1) {
+        throw boom.badData("Data already exist");
+      }
+    } catch (error) {
+      cb(error, null);
     }
   });
 };

@@ -13,6 +13,7 @@ const trabajadorSchema = new Schema(
     image: String,
     id: String,
     contraseña: String,
+    role: String,
   },
   {
     timestamps: true,

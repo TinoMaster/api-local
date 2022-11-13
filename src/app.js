@@ -8,15 +8,23 @@ const express = require("express"),
 
 require("dotenv").config();
 
-const notasRoutes = require("./routes/notas-router.js"),
-  cuadreRoutes = require("./routes/cuadre-router.js"),
-  loginRoutes = require("./routes/login-router"),
-  inventarioRoutes = require("./routes/inventario-router"),
-  testInyectores = require("./routes/testInyectores-router"),
-  trabajadoresRouter = require("./routes/trabajador-router");
+const notasRoutes = require("./routes/notas.routes"),
+  cuadreRoutes = require("./routes/cuadre.routes"),
+  inventarioRoutes = require("./routes/inventario.routes"),
+  testInyectores = require("./routes/testInyectores.routes"),
+  trabajadoresRouter = require("./routes/trabajador.routes"),
+  rolesRouter = require("./routes/roles.routes");
+
+const {
+  boomErrorHandler,
+  errorHandler,
+} = require("./middlewares/error.handler");
 
 //settings
-app.set("port", 5000);
+app.set("port", process.env.SERVER_PORT || 5000);
+
+app.use(boomErrorHandler);
+app.use(errorHandler);
 
 app.use(morgan("dev"));
 app.use(restfull);
@@ -29,10 +37,10 @@ app.use(
 );
 app.use(notasRoutes);
 app.use(cuadreRoutes);
-app.use(loginRoutes);
 app.use(inventarioRoutes);
 app.use(testInyectores);
 app.use(trabajadoresRouter);
+app.use(rolesRouter);
 app.use(cors());
 
 app.listen(app.get("port"), () => {

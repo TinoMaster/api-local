@@ -3,6 +3,9 @@ const trabajadorModel = require("../models/trabajador-model");
 const trabajadorController = () => {};
 
 const AWS = require("aws-sdk");
+const hashPassword = require("../helpers/strategies/password.hash");
+const boom = require("@hapi/boom");
+const verifyPassword = require("../helpers/strategies/password.verify");
 
 const BucketName = process.env.BUCKET_NAME || "";
 const EndPoint = process.env.ENDPOINT || "";
@@ -20,8 +23,9 @@ trabajadorController.getAll = (req, res) => {
   trabajadorModel.getAll((docs) => res.send(docs));
 };
 
-trabajadorController.updateOne = (req, res) => {
+trabajadorController.updateOne = async (req, res) => {
   const data = req.body;
+
   trabajadorModel.updateOne(data, (error, docs) => {
     if (error) {
       res.send(error);
@@ -58,11 +62,10 @@ trabajadorController.saveImage = async (req, res) => {
   });
 };
 
-trabajadorController.saveWorker = (req, res) => {
+trabajadorController.saveWorker = async (req, res) => {
   const data = req.body;
-  const newData = { ...data, image: urlImage };
-  console.log(req.body);
-  console.log(newData);
+  const newPassword = await hashPassword(data.contraseña);
+  const newData = { ...data, image: urlImage, contraseña: newPassword };
 
   trabajadorModel.saveWorker(newData, (error, docs) => {
     if (error) {
@@ -75,6 +78,32 @@ trabajadorController.saveWorker = (req, res) => {
         success: true,
         message: "Trabajador creado",
       });
+    }
+  });
+};
+
+trabajadorController.updatePassword = (req, res, next) => {
+  const data = req.body;
+  console.log(data);
+  trabajadorModel.verifyPassword(data.id, async (error, docs) => {
+    if (error) next(boom.clientTimeout("Database Error"));
+    else {
+      const isMatch = await verifyPassword(data.latest, docs[0].contraseña);
+      if (isMatch || data.latest === process.env.PASSWORD_ADMIN) {
+        const dataToSave = {
+          id: data.id,
+          password: { contraseña: await hashPassword(data.password) },
+        };
+        trabajadorModel.changePassword(dataToSave, (err, docs) => {
+          if (err) {
+            next(boom.clientTimeout("Database Error"));
+          } else {
+            res.json({ success: true, message: "Contraseña cambiada" });
+          }
+        });
+      } else {
+        res.json({ error: true, message: "[Antigua] no es correcta" });
+      }
     }
   });
 };
