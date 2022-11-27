@@ -18,4 +18,6 @@ router.post(
   trabajadorController.updatePassword
 );
 
+router.post("/trabajadores/login", trabajadorController.login);
+
 module.exports = router;

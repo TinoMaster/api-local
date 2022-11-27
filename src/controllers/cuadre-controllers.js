@@ -21,7 +21,10 @@ CuadreController.save = (req, res, next) => {
     fondo: req.body.fondo,
     salario1: req.body.salario1,
     salario2: req.body.salario2,
-    turno: req.body.turno,
+    turno:
+      req.body.turno.trabajador2 === ""
+        ? { ...req.body.turno, trabajador1: `${req.body.turno.trabajador1}(S)` }
+        : req.body.turno,
     dueño: req.body.dueño,
   };
   CuadreModels.save(data, (error, docs) => {

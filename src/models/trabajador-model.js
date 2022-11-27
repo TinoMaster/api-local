@@ -2,10 +2,14 @@ const trabajadorConnection = require("./trabajador-connection");
 const trabajadorModel = () => {};
 
 trabajadorModel.getAll = (cb) => {
-  trabajadorConnection.find().exec((err, docs) => {
-    if (err) throw err;
-    cb(docs);
-  });
+  try {
+    trabajadorConnection.find().exec((err, docs) => {
+      if (err) throw err;
+      cb(null, docs);
+    });
+  } catch (error) {
+    cb(error, null);
+  }
 };
 
 trabajadorModel.updateOne = (data, cb) => {
@@ -61,6 +65,14 @@ trabajadorModel.changePassword = (data, cb) => {
   } catch (error) {
     cb(error, null);
   }
+};
+
+trabajadorModel.login = (correo, cb) => {
+  trabajadorConnection.find({ correo }).exec((error, docs) => {
+    if (docs.length === 0) {
+      cb({ error: true, message: "No se encuentra el usuario" }, null);
+    } else cb(null, docs);
+  });
 };
 
 module.exports = trabajadorModel;

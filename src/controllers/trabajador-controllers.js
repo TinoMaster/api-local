@@ -20,7 +20,20 @@ const s3 = new AWS.S3({
 let urlImage = "";
 
 trabajadorController.getAll = (req, res) => {
-  trabajadorModel.getAll((docs) => res.send(docs));
+  trabajadorModel.getAll((error, docs) => {
+    if (error) {
+      console.log(error);
+      res.json({
+        error: true,
+        message: "Error con la conexion con base de datos",
+      });
+    } else {
+      res.json({
+        success: true,
+        data: docs,
+      });
+    }
+  });
 };
 
 trabajadorController.updateOne = async (req, res) => {
@@ -104,6 +117,33 @@ trabajadorController.updatePassword = (req, res, next) => {
       } else {
         res.json({ error: true, message: "[Antigua] no es correcta" });
       }
+    }
+  });
+};
+
+trabajadorController.login = (req, res, next) => {
+  const { usuario, contraseña } = req.body;
+  console.log(usuario, contraseña);
+
+  trabajadorModel.login(usuario, async (error, data) => {
+    if (error?.error) {
+      res.json({ error: true, message: error?.message });
+    } else {
+      const validar = await verifyPassword(contraseña, data[0].contraseña);
+
+      const docs = data[0];
+      const dataToSend = {
+        name: docs?.usuario,
+        role: docs?.role,
+        image: docs?.image,
+      };
+
+      validar
+        ? res.json({ success: true, dataToSend })
+        : res.json({
+            error: true,
+            message: "Usuario o contraseña incorrecta",
+          });
     }
   });
 };
