@@ -35,8 +35,10 @@ CuadreModel.save = (data, cb) => {
   });
 };
 
-CuadreModel.getMonth = (id1, id2, cb) => {
-  cuadreConnections.find({ id: { $gte: id1, $lte: id2 } }).exec((err, docs) => {
+CuadreModel.getMonth = (fechaToSearch, cb) => {
+  const fecha = fechaToSearch.toString();
+  const regex = new RegExp(`^([1-9]|1[0-9]|2[0-9]|30)-${fecha}`);
+  cuadreConnections.find({ fecha: { $regex: regex } }).exec((err, docs) => {
     if (err) throw err;
     cb(docs);
   });
