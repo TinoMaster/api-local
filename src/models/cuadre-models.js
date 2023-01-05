@@ -49,4 +49,16 @@ CuadreModel.getPorAño = async (id1, id2, id3, id4, cb) => {
   cb(bd3);
 };
 
+CuadreModel.deleteOne = (id, cb) => {
+  try {
+    cuadreConnections.deleteOne({ id }, (err) => {
+      if (err) {
+        throw err;
+      } else cb(null);
+    });
+  } catch (error) {
+    cb(error);
+  }
+};
+
 module.exports = CuadreModel;

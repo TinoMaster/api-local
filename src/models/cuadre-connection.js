@@ -1,8 +1,8 @@
 const mongoose = require("mongoose"),
-  Shema = mongoose.Schema,
+  Schema = mongoose.Schema,
   dbConfig = require("./db.config");
 
-const cuadreSchema = new Shema({
+const cuadreSchema = new Schema({
   id: {
     type: Number,
     unique: true,

@@ -1,27 +1,14 @@
-
 const express = require("express"),
   router = express.Router(),
-  CuadreController = require("../controllers/cuadre-controllers"),
-  cors = require("cors");
+  CuadreController = require("../controllers/cuadre-controllers");
 
-/* const whiteList = "http://localhost:3000";
+router.delete("/cuadre/delete/:id", CuadreController.deleteOne);
 
-let corsOptions = {
-  origin: (origin, callback) => {
-    if (whiteList.indexOf(origin) !== -1) {
-      callback(null, true);
-    } else {
-      callback(new Error("no allowed by cors"));
-    }
-  },
-}; */
-
-router.use(cors());
 /* General */
 router.get("/cuadre", CuadreController.getAll);
 
 /* Años */
-router.get(`/cuadre/2022`, CuadreController.getPorAño)
+router.get(`/cuadre/2022`, CuadreController.getPorAño);
 
 /* Meses */
 router.get("/cuadre/enero", CuadreController.getMonth);

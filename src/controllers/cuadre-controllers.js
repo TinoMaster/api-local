@@ -109,5 +109,13 @@ CuadreController.getPorAño = (req, res) => {
     res.json(docs);
   });
 };
+CuadreController.deleteOne = (req, res) => {
+  const id = req.params.id;
+  CuadreModels.deleteOne(id, (error) => {
+    if (error) {
+      res.json({ error: true, message: "Error con la base de datos" });
+    } else res.json({ success: true, message: "Se ah borrado el archivo" });
+  });
+};
 
 module.exports = CuadreController;

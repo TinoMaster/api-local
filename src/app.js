@@ -13,7 +13,8 @@ const notasRoutes = require("./routes/notas.routes"),
   inventarioRoutes = require("./routes/inventario.routes"),
   testInyectores = require("./routes/testInyectores.routes"),
   trabajadoresRouter = require("./routes/trabajador.routes"),
-  rolesRouter = require("./routes/roles.routes");
+  rolesRouter = require("./routes/roles.routes"),
+  productsRouter = require("./routes/products.routes");
 
 const {
   boomErrorHandler,
@@ -21,6 +22,7 @@ const {
 } = require("./middlewares/error.handler");
 
 //settings
+app.use(cors());
 app.set("port", process.env.SERVER_PORT || 5000);
 
 app.use(boomErrorHandler);
@@ -41,7 +43,7 @@ app.use(inventarioRoutes);
 app.use(testInyectores);
 app.use(trabajadoresRouter);
 app.use(rolesRouter);
-app.use(cors());
+app.use(productsRouter);
 
 app.listen(app.get("port"), () => {
   console.log("servidosr corriendo en el puerto", app.get("port"));
