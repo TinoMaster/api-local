@@ -44,18 +44,15 @@ CuadreController.getMonth = (req, res) => {
 };
 
 CuadreController.getPorAño = (req, res) => {
-  let mes = req.url;
-  let año = mes.substring(8, 12);
+  let año = req.params.fecha;
 
-  let fecha1 = parseInt(`${año}001`);
-  let fecha2 = parseInt(`${año}931`);
-  let fecha3 = parseInt(`${año}1001`);
-  let fecha4 = parseInt(`${año}1131`);
-
-  CuadreModels.getPorAño(fecha1, fecha2, fecha3, fecha4, (docs) => {
-    res.json(docs);
+  CuadreModels.getPorAño(año, (error, docs) => {
+    if (error) {
+      res.json({ error: true, message: "Ah ocurrido un error" });
+    } else res.json(docs);
   });
 };
+
 CuadreController.deleteOne = (req, res) => {
   const id = req.params.id;
   CuadreModels.deleteOne(id, (error) => {

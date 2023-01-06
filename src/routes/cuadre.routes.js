@@ -8,12 +8,10 @@ router.delete("/cuadre/delete/:id", CuadreController.deleteOne);
 router.get("/cuadre", CuadreController.getAll);
 
 /* Años */
-router.get(`/cuadre/2022`, CuadreController.getPorAño);
+router.get(`/cuadre/getYear/:fecha`, CuadreController.getPorAño);
 
 /* Meses */
-router.get("/cuadre/:fecha", CuadreController.getMonth);
-
-router.get("/cuadre/getYears", CuadreController.getMonth);
+router.get("/cuadre/getMonth/:fecha", CuadreController.getMonth);
 
 
 router.post("/cuadre", CuadreController.save);

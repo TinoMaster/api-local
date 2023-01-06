@@ -44,11 +44,16 @@ CuadreModel.getMonth = (fechaToSearch, cb) => {
   });
 };
 
-CuadreModel.getPorAño = async (id1, id2, id3, id4, cb) => {
-  const bd = await cuadreConnections.find({ id: { $gte: id1, $lte: id2 } });
-  const bd2 = await cuadreConnections.find({ id: { $gte: id3, $lte: id4 } });
-  const bd3 = await [...bd, ...bd2];
-  cb(bd3);
+CuadreModel.getPorAño = async (año, cb) => {
+  const regex = new RegExp(`^([1-9]|1[0-9]|2[0-9]|30)-([1-9]|1[0-2])-${año}`);
+  try {
+    cuadreConnections.find({ fecha: { $regex: regex } }).exec((err, docs) => {
+      if (err) throw err;
+      cb(null, docs);
+    });
+  } catch (error) {
+    cb(error, null);
+  }
 };
 
 CuadreModel.deleteOne = (id, cb) => {
