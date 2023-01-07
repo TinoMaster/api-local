@@ -17,8 +17,6 @@ const s3 = new AWS.S3({
   endpoint: spacesEndpoint,
 });
 
-let urlImage = "";
-
 trabajadorController.getAll = (req, res) => {
   trabajadorModel.getAll((error, docs) => {
     if (error) {
@@ -51,34 +49,10 @@ trabajadorController.updateOne = async (req, res) => {
   });
 };
 
-trabajadorController.saveImage = async (req, res) => {
-  const { image } = req.files;
-
-  try {
-    await s3
-      .putObject({
-        ACL: "public-read",
-        Bucket: BucketName,
-        Body: image.data,
-        Key: image.name,
-      })
-      .promise();
-
-    urlImage = `https://${BucketName}.${EndPoint}/${image.name}`;
-  } catch (error) {
-    console.log(error);
-    res.send(error);
-  }
-  return res.json({
-    success: true,
-    message: "Archivos subidos correctamente",
-  });
-};
-
 trabajadorController.saveWorker = async (req, res) => {
   const data = req.body;
   const newPassword = await hashPassword(data.contraseña);
-  const newData = { ...data, image: urlImage, contraseña: newPassword };
+  const newData = { ...data, contraseña: newPassword };
 
   trabajadorModel.saveWorker(newData, (error, docs) => {
     if (error) {

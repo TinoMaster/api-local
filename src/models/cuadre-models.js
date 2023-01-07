@@ -37,7 +37,7 @@ CuadreModel.save = (data, cb) => {
 
 CuadreModel.getMonth = (fechaToSearch, cb) => {
   const fecha = fechaToSearch.toString();
-  const regex = new RegExp(`^([1-9]|1[0-9]|2[0-9]|30)-${fecha}`);
+  const regex = new RegExp(`^([1-9]|1[0-9]|2[0-9]|3[0-1])-${fecha}`);
   cuadreConnections.find({ fecha: { $regex: regex } }).exec((err, docs) => {
     if (err) throw err;
     cb(docs);
@@ -45,7 +45,7 @@ CuadreModel.getMonth = (fechaToSearch, cb) => {
 };
 
 CuadreModel.getPorAño = async (año, cb) => {
-  const regex = new RegExp(`^([1-9]|1[0-9]|2[0-9]|30)-([1-9]|1[0-2])-${año}`);
+  const regex = new RegExp(`^([1-9]|1[0-9]|2[0-9]|3[0-1])-([1-9]|1[0-2])-${año}`);
   try {
     cuadreConnections.find({ fecha: { $regex: regex } }).exec((err, docs) => {
       if (err) throw err;
