@@ -14,7 +14,8 @@ const notasRoutes = require("./routes/notas.routes"),
   testInyectores = require("./routes/testInyectores.routes"),
   trabajadoresRouter = require("./routes/trabajador.routes"),
   rolesRouter = require("./routes/roles.routes"),
-  productsRouter = require("./routes/products.routes");
+  productsRouter = require("./routes/products.routes"),
+  cardsRouter = require("./routes/cards.routes");
 
 const {
   boomErrorHandler,
@@ -44,6 +45,7 @@ app.use(testInyectores);
 app.use(trabajadoresRouter);
 app.use(rolesRouter);
 app.use(productsRouter);
+app.use(cardsRouter);
 
 app.listen(app.get("port"), () => {
   console.log("servidosr corriendo en el puerto", app.get("port"));

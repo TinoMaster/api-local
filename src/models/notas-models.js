@@ -8,13 +8,6 @@ NotasModel.getAll = (cb) => {
   });
 };
 
-/* NotasModel.getOne = (id, cb) => {
-  notasConnection.find({ id: id }).exec((err, docs) => {
-    if (err) throw err;
-    cb(docs);
-  });
-}; */
-
 NotasModel.save = (data, cb) => {
   notasConnection.countDocuments({ id: data.id }).exec((err, count) => {
     if (err) throw err;
