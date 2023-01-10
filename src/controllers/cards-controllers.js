@@ -24,5 +24,12 @@ CardsControllers.deleteCard = (req, res) => {
     } else res.json({ success: true, message: "Tarjeta borrada" });
   });
 };
+CardsControllers.deleteAll = (req, res) => {
+  CardsModel.deleteAll((err) => {
+    if (err) {
+      res.json({ error: true, message: "Error en la BD" });
+    } else res.json({ success: true, message: "Tarjetas borradas" });
+  });
+};
 
 module.exports = CardsControllers;

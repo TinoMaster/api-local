@@ -37,5 +37,18 @@ CardsModel.deleteCard = (id, cb) => {
     cb(error);
   }
 };
+CardsModel.deleteAll = (cb) => {
+  try {
+    CardsConnection.remove((err) => {
+      if (err) {
+        throw err;
+      } else {
+        cb(null);
+      }
+    });
+  } catch (error) {
+    cb(error);
+  }
+};
 
 module.exports = CardsModel;
