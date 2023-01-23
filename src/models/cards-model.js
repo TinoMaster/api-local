@@ -39,7 +39,7 @@ CardsModel.deleteCard = (id, cb) => {
 };
 CardsModel.deleteAll = (cb) => {
   try {
-    CardsConnection.remove((err) => {
+    CardsConnection.deleteMany((err) => {
       if (err) {
         throw err;
       } else {

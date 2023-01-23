@@ -11,7 +11,7 @@ CuadreController.getAll = (req, res, next) => {
   });
 };
 
-CuadreController.save = (req, res, next) => {
+CuadreController.save = (req, res) => {
   console.log(req.body);
   let data = {
     id: req.body.id,
@@ -27,13 +27,16 @@ CuadreController.save = (req, res, next) => {
         : req.body.turno,
     dueño: req.body.dueño,
   };
-  CuadreModels.save(data, (error, docs) => {
-    if (error) {
-      res.send(error.output.payload);
-      next(error);
-    }
-    res.json(docs);
-  });
+  try {
+    CuadreModels.save(data, (error, docs) => {
+      if (error) {
+        res.json({ error: true, message: "internal error" });
+      }
+      res.json(docs);
+    });
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 CuadreController.getMonth = (req, res) => {

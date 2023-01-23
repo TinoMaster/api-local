@@ -1,8 +1,6 @@
 const cuadreConnections = require("./cuadre-connection");
 const CuadreModel = () => {};
 
-const boom = require("@hapi/boom");
-
 CuadreModel.getAll = (cb) => {
   cuadreConnections.find().exec((err, docs) => {
     try {
@@ -19,18 +17,18 @@ CuadreModel.getAll = (cb) => {
 CuadreModel.save = (data, cb) => {
   cuadreConnections.countDocuments({ id: data.id }).exec((err, count) => {
     try {
-      if (err) throw boom.clientTimeout("Database Error");
+      if (err) throw err;
 
       if (count === 0) {
         cuadreConnections.create(data, (err) => {
-          if (err) throw boom.clientTimeout("Database Error");
+          if (err) throw err;
           else cb(null, data);
         });
       } else if (count === 1) {
-        throw boom.badData("Data already exist");
+        cb({ error: true, message: "data already exist" }, null);
       }
     } catch (error) {
-      cb(error, null);
+      console.log(error);
     }
   });
 };
@@ -45,7 +43,9 @@ CuadreModel.getMonth = (fechaToSearch, cb) => {
 };
 
 CuadreModel.getPorAño = async (año, cb) => {
-  const regex = new RegExp(`^([1-9]|1[0-9]|2[0-9]|3[0-1])-([1-9]|1[0-2])-${año}`);
+  const regex = new RegExp(
+    `^([1-9]|1[0-9]|2[0-9]|3[0-1])-([1-9]|1[0-2])-${año}`
+  );
   try {
     cuadreConnections.find({ fecha: { $regex: regex } }).exec((err, docs) => {
       if (err) throw err;
