@@ -41,4 +41,16 @@ NotasModel.delete = (id, cb) => {
   });
 };
 
+NotasModel.updateChecked = (id, checked, cb) => {
+  try {
+    notasConnection.findOneAndUpdate({ id }, { checked }).exec((error) => {
+      if (error) {
+        cb(error);
+      } else cb();
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 module.exports = NotasModel;
