@@ -12,6 +12,7 @@ const notaSchema = new Schema({
   fecha: String,
   creador: String,
   telefono: String,
+  checked: Number,
 });
 
 const notasModel = mongoose.model("Notas", notaSchema);

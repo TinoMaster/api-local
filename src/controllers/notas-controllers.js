@@ -22,6 +22,7 @@ NotasController.save = (req, res) => {
     fecha: req.body.fecha,
     telefono: req.body.telefono,
     creador: req.body.creador,
+    checked: 1,
   };
   NotasModel.save(data, () => {
     res.send(console.log("exitoso"));
