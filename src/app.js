@@ -3,8 +3,7 @@ const express = require("express"),
   morgan = require("morgan"),
   bodyParser = require("body-parser"),
   cors = require("cors"),
-  restfull = require("express-method-override")("_method"),
-  fileUpload = require("express-fileupload");
+  restfull = require("express-method-override")("_method");
 
 require("dotenv").config();
 
@@ -15,7 +14,8 @@ const notasRoutes = require("./routes/notas.routes"),
   trabajadoresRouter = require("./routes/trabajador.routes"),
   rolesRouter = require("./routes/roles.routes"),
   productsRouter = require("./routes/products.routes"),
-  cardsRouter = require("./routes/cards.routes");
+  cardsRouter = require("./routes/cards.routes"),
+  mironesRouter = require("./routes/mirones.routes");
 
 const {
   boomErrorHandler,
@@ -33,11 +33,7 @@ app.use(morgan("dev"));
 app.use(restfull);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(
-  fileUpload({
-    tempFileDir: "/temp",
-  })
-);
+
 app.use(notasRoutes);
 app.use(cuadreRoutes);
 app.use(inventarioRoutes);
@@ -46,6 +42,7 @@ app.use(trabajadoresRouter);
 app.use(rolesRouter);
 app.use(productsRouter);
 app.use(cardsRouter);
+app.use(mironesRouter);
 
 app.listen(app.get("port"), () => {
   console.log("servidosr corriendo en el puerto", app.get("port"));
