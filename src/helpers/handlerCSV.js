@@ -10,7 +10,22 @@ const HandlerCSV = (archivo, name) => {
     cant_ficheros: 0,
     venta_total: 0,
     dispositivos: [],
+    copias: [],
   };
+
+  const reduceCopia = (array) => {
+    let result = {};
+    result = array?.reduce((objectResult, element) => {
+      if (!objectResult[element]) {
+        objectResult[element] = 1;
+      } else {
+        objectResult[element] += 1;
+      }
+      return result;
+    }, result);
+    return result;
+  };
+
   return new Promise((resolve, reject) => {
     const fileStream = fs.createReadStream(archivo);
     const rl = readline.createInterface({
@@ -26,6 +41,8 @@ const HandlerCSV = (archivo, name) => {
     const regexCantDisp = /^,\s*(\d+)\s*Dispositivos/;
     const regexCantGb = /^,\s*(\d+)\s*\.?\d?\s?GB/;
     const regexCantFicheros = /^,\s*(\d+\s*)\s?ficheros/;
+    const regexCopias =
+      /^,.*(\d+)([MBKG]+),(\d+:\d+:\d+).*(\w:)\\(.*)\.(\w{2,4}.*),*$/;
 
     defaultData.name = name;
     rl.on("line", (line) => {
@@ -35,7 +52,16 @@ const HandlerCSV = (archivo, name) => {
       const matchCantDisp = line.match(regexCantDisp);
       const matchCantGb = line.match(regexCantGb);
       const matchCantFicheros = line.match(regexCantFicheros);
-      if (matchesDispositivos) {
+      const matchCopia = line.match(regexCopias);
+
+      if (matchCopia) {
+        const result = matchCopia[5]
+          .trim()
+          .replaceAll(/"/g, "")
+          .replaceAll(/\\/g, "");
+
+        defaultData.copias.push(result);
+      } else if (matchesDispositivos) {
         const result = `{
         "dispositivo": "${matchesDispositivos[1].trim().replaceAll(/"/g, "")}",
         "tipo":"${matchesDispositivos[2]}",      
@@ -78,7 +104,11 @@ const HandlerCSV = (archivo, name) => {
     });
 
     rl.on("close", () => {
-      resolve(defaultData);
+      const dataToSend = {
+        ...defaultData,
+        copias: reduceCopia(defaultData.copias),
+      };
+      resolve(dataToSend);
     });
     rl.on("error", (err) => {
       console.log(err);

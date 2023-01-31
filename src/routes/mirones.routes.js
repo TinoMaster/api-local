@@ -28,13 +28,14 @@ router.post(
     convertXLSX(archivo.path)
       .then(() => {
         handlerCSV("public/csv/data.csv", nameOfData)
-          .then((data) =>
+          .then((data) => {
+            
             res.json({
               success: true,
               message: "Archivo procesado correctamente",
               data,
-            })
-          )
+            });
+          })
           .catch((err) => {
             console.log(err);
             res.status(500).json({ error: true, message: "Internal error" });
