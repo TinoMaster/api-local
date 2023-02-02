@@ -65,7 +65,7 @@ const HandlerCSV = (archivo, name) => {
         const result = `{
         "dispositivo": "${(matchesDispositivos[1] || "")
           .trim()
-          .replaceAll(/"/g, "")}",
+          .replace(/"/g, "")}",
         "tipo":"${matchesDispositivos[2]}",      
         "insercion":"${matchesDispositivos[3]}",      
         "tamano_copiados":"${matchesDispositivos[4]}",      
