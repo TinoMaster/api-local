@@ -57,8 +57,8 @@ const HandlerCSV = (archivo, name) => {
       if (matchCopia) {
         const result = matchCopia[5]
           .trim()
-          .replaceAll(/"/g, "")
-          .replaceAll(/\\/g, "");
+          .replace(/"/g, "")
+          .replace(/\\/g, "");
 
         defaultData.copias.push(result);
       } else if (matchesDispositivos) {
@@ -81,7 +81,7 @@ const HandlerCSV = (archivo, name) => {
             ? matchesDispositivos[8].replace("$", "")
             : 0
         )}",      
-        "comentario":"${(matchesDispositivos[9] || "").replaceAll(/"/g, "")}"   
+        "comentario":"${(matchesDispositivos[9] || "").replace(/"/g, "")}"   
       }`;
         const resultJson = JSON.parse(result);
         defaultData.dispositivos.push(resultJson);
