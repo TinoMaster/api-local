@@ -3,6 +3,11 @@ const mongoose = require("mongoose"),
   dbConfig = require("./db.config");
 
 const mironSchema = new Schema({
+  id: {
+    type: String,
+    unique: true,
+  },
+  name: String,
   fecha: String,
   cant_dispositivos: Number,
   volumen_copia: Number,

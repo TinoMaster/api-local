@@ -11,13 +11,19 @@ const multer = require("multer");
 const storage = multer.diskStorage({
   destination: "uploads/",
   filename: function (req, file, cb) {
-    cb(null, /* file.originalname.split(" ")[0] */"Reporte_miron" + path.extname(file.originalname));
+    cb(
+      null,
+      /* file.originalname.split(" ")[0] */ "Reporte_miron" +
+        path.extname(file.originalname)
+    );
   },
 });
 const upload = multer({ storage });
 
 router.use(cors());
 router.get("/mirones", MironesController.getAll);
+router.post("/mirones", MironesController.save);
+/* Procesar excel */
 router.post(
   "/mirones/handlerExcel",
   upload.single("file"),

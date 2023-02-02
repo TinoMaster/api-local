@@ -38,7 +38,7 @@ const HandlerCSV = (archivo, name) => {
       /^("?\w*[\(\)\d]*[\w\s"\.\-\(\),]+)[\(\)\d\w:\-]*,+([\w\d\s]*),([\d:]*[pma\.\s]*),([\d\.\w\s]*),([\d\s\w]*),([\d\s\w]*),(\$?[\d]{0,5}),([.*]?),(".*"),*$/;
     const regexFecha =
       /^,([LMJVSD][\wáéíóúÁÉÍÓÚñÑ]*)\s?(\d{1,2})\s?de\s?([A-Z]\w+)/;
-    const regexTotal = /^,\s*[\$](\d+)/;
+    const regexTotal = /^,\s*[\$]?(\d+),*$/;
     const regexCantDisp = /^,\s*(\d+)\s*Dispositivos/;
     const regexCantGb = /^,\s*(\d+\.?\d?)\s([TBGK]+),*$/;
     const regexCantFicheros = /^,\s*(\d+\s*)\s?ficheros/;
