@@ -63,23 +63,25 @@ const HandlerCSV = (archivo, name) => {
         defaultData.copias.push(result);
       } else if (matchesDispositivos) {
         const result = `{
-        "dispositivo": "${matchesDispositivos[1]?.trim()?.replaceAll(/"/g, "")}",
+        "dispositivo": "${(matchesDispositivos[1] || "")
+          .trim()
+          .replaceAll(/"/g, "")}",
         "tipo":"${matchesDispositivos[2]}",      
         "insercion":"${matchesDispositivos[3]}",      
         "tamano_copiados":"${matchesDispositivos[4]}",      
         "ficheros_copiados":"${matchesDispositivos[5]}",      
         "ficheros_borrados":"${matchesDispositivos[6]}",      
         "pago":"${parseInt(
-          matchesDispositivos[7]?.replace("$", "")
-            ? matchesDispositivos[7]?.replace("$", "")
+          matchesDispositivos[7].replace("$", "")
+            ? matchesDispositivos[7].replace("$", "")
             : 0
         )}",      
         "cobrado":"${parseInt(
-          matchesDispositivos[8]?.replace("$", "")
-            ? matchesDispositivos[8]?.replace("$", "")
+          matchesDispositivos[8].replace("$", "")
+            ? matchesDispositivos[8].replace("$", "")
             : 0
         )}",      
-        "comentario":"${matchesDispositivos[9]?.replaceAll(/"/g, "")}"   
+        "comentario":"${(matchesDispositivos[9] || "").replaceAll(/"/g, "")}"   
       }`;
         const resultJson = JSON.parse(result);
         defaultData.dispositivos.push(resultJson);
