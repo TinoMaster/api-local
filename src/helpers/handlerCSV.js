@@ -35,11 +35,12 @@ const HandlerCSV = (archivo, name) => {
     const fecha = new Date();
 
     const regexDispositivos =
-      /^("?\w*[\(\)\d]*[\w\s"\.\-\(\),]+)[\(\)\d\w:\-]*,+([\w\d\s]*),([\d:]*),([\d\.\w\s]*),([\d\s\w]*),([\d\s\w]*),(\$?[\d]{0,5}),([.*]?),(".*"),*$/;
-    const regexFecha = /^,([LMJVSD]\w+)\s?(\d{1,2})\s?de\s?([A-Z]\w+)/;
+      /^("?\w*[\(\)\d]*[\w\s"\.\-\(\),]+)[\(\)\d\w:\-]*,+([\w\d\s]*),([\d:]*[pma\.\s]*),([\d\.\w\s]*),([\d\s\w]*),([\d\s\w]*),(\$?[\d]{0,5}),([.*]?),(".*"),*$/;
+    const regexFecha =
+      /^,([LMJVSD][\wáéíóúÁÉÍÓÚñÑ]*)\s?(\d{1,2})\s?de\s?([A-Z]\w+)/;
     const regexTotal = /^,\s*[\$](\d+)/;
     const regexCantDisp = /^,\s*(\d+)\s*Dispositivos/;
-    const regexCantGb = /^,\s*(\d+)\s*\.?\d?\s?GB/;
+    const regexCantGb = /^,\s*(\d+\.?\d?)\s([TBGK]+),*$/;
     const regexCantFicheros = /^,\s*(\d+\s*)\s?ficheros/;
     const regexCopias =
       /^,.*(\d+)([MBKG]+),(\d+:\d+:\d+).*(\w:)\\(.*)\.(\w{2,4}.*),*$/;
@@ -63,9 +64,7 @@ const HandlerCSV = (archivo, name) => {
         defaultData.copias.push(result);
       } else if (matchesDispositivos) {
         const result = `{
-        "dispositivo": "${(matchesDispositivos[1] || "")
-          .trim()
-          .replace(/"/g, "")}",
+        "dispositivo": "${matchesDispositivos[1].trim().replace(/"/g, "")}",
         "tipo":"${matchesDispositivos[2]}",      
         "insercion":"${matchesDispositivos[3]}",      
         "tamano_copiados":"${matchesDispositivos[4]}",      
@@ -81,7 +80,7 @@ const HandlerCSV = (archivo, name) => {
             ? matchesDispositivos[8].replace("$", "")
             : 0
         )}",      
-        "comentario":"${(matchesDispositivos[9] || "").replace(/"/g, "")}"   
+        "comentario":"${matchesDispositivos[9].replace(/"/g, "")}"   
       }`;
         const resultJson = JSON.parse(result);
         defaultData.dispositivos.push(resultJson);
@@ -97,7 +96,10 @@ const HandlerCSV = (archivo, name) => {
         const result = parseInt(matchCantDisp[1]);
         defaultData.cant_dispositivos = result;
       } else if (matchCantGb) {
-        const result = parseInt(matchCantGb[1]);
+        let result = 0;
+        matchCantGb[2] === "TB"
+          ? (result = parseFloat(matchCantGb[1]) * 1000)
+          : (result = parseFloat(matchCantGb[1]));
         defaultData.volumen_copia = result;
       } else if (matchCantFicheros) {
         const result = parseInt(matchCantFicheros[1]);
