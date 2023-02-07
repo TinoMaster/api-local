@@ -19,3 +19,4 @@ router.post(
 router.post("/trabajadores/login", trabajadorController.login);
 
 module.exports = router;
+

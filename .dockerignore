@@ -2,6 +2,7 @@
 .dockerignore
 .git
 .gitignore
+.env
 build/*
 Dockerfile
 node_modules

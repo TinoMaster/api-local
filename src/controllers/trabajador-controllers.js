@@ -58,7 +58,7 @@ trabajadorController.saveWorker = async (req, res) => {
     if (error) {
       res.json({
         error: true,
-        message: "Error de conexion",
+        message: "Error Interno",
       });
     } else {
       res.json({

@@ -1,12 +1,12 @@
-FROM node:16
+FROM node:18
 
-RUN mkdir -p /home/apilocal
+COPY ["./package.json", "/usr/src"]
 
-COPY . /home/apilocal/
-
-WORKDIR /home/apilocal
+WORKDIR /usr/src
 
 RUN npm install
+
+COPY [".", "/usr/src"]
 
 EXPOSE 5000
 

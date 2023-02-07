@@ -4,16 +4,16 @@ const mongoose = require("mongoose"),
 
 const trabajadorSchema = new Schema(
   {
-    nombre: String,
-    usuario: String,
+    nombre: { type: String, required: true },
+    usuario: { type: String, required: true },
     direccion: String,
     municipio: String,
     telefono: String,
-    correo: { type: String, unique: true },
+    correo: { type: String, unique: true, required: true },
     image: String,
     id: { type: String, unique: true },
-    contraseña: String,
-    role: String,
+    contraseña: { type: String, required: true },
+    role: { type: String, required: true },
   },
   {
     timestamps: true,
