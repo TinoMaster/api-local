@@ -2,7 +2,19 @@ version: "3.9"
 
 services:
   apilocal:
+    deploy:
+      resources:
+        limits: 
+          memory: 500M
+          cpus: 1GB
     volumes:
-      - .:/home/apilocal
-      - /home/apilocal/node_modules
+      - .:/usr/src
+      - /usr/src/node_modules
     command: npx nodemon -L src/app.js
+
+  db:
+    deploy:
+      resources:
+        limits: 
+          memory: 500M
+          cpus: 1GB

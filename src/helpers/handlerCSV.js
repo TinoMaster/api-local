@@ -35,7 +35,7 @@ const HandlerCSV = (archivo, name) => {
     const fecha = new Date();
 
     const regexDispositivos =
-      /^("?\w*[\(\)\d]*[\w\s"\.\-\(\),]+)[\(\)\d\w:\-]*,+([\w\d\s]*),([\d:]*[pma\.\s]*),([\d\.\w\s]*),([\d\s\w]*),([\d\s\w]*),(\$?[\d]{0,5}),([.*]?),(".*"),*$/;
+      /^("?\w*[\(\)\d]*[\w\s"\.\-]+)?[\(\)\d\w:\-]*,+([\w\d\s]*),([\d:]*[pma\.\s]*),([\d\.\w\s]*),([\d\s\w]*),([\d\s\w]*),(\$?[\d]{0,5}),([.*]?),(".*"),*$/;
     const regexFecha =
       /^,([LMJVSD][\wáéíóúÁÉÍÓÚñÑ]*)\s?(\d{1,2})\s?de\s?([A-Z]\w+)/;
     const regexTotal = /^,\s*[\$]?(\d+),*$/;

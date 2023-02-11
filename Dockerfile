@@ -4,7 +4,7 @@ COPY ["./package.json", "/usr/src"]
 
 WORKDIR /usr/src
 
-RUN npm install
+RUN npm install --only=production
 
 COPY [".", "/usr/src"]
 
