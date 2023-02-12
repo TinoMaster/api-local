@@ -35,7 +35,7 @@ const HandlerCSV = (archivo, name) => {
     const fecha = new Date();
 
     const regexDispositivos =
-      /^("?\w*[\(\)\d]*[\w\s"\.\-]+)?[\(\)\d\w:\-]*,+([\w\d\s]*),([\d:]*[pma\.\s]*),([\d\.\w\s]*),([\d\s\w]*),([\d\s\w]*),(\$?[\d]{0,5}),([.*]?),(".*"),*$/;
+      /^"?(\w*[\(\)\d]*[\w\s"\.\-]*)?(\(\w?:\))?.*,+([\w\d\s]*),([\d:]*[pma\.\s]*),([\d\.\w\s]*),([\d\s\w]*),([\d\s\w]*),(\$?[\d]{0,5}),([.*]?),(".*"),*$/;
     const regexFecha =
       /^,([LMJVSD][\wáéíóúÁÉÍÓÚñÑ]*)\s?(\d{1,2})\s?de\s?([A-Z]\w+)/;
     const regexTotal = /^,\s*[\$]?(\d+),*$/;
@@ -65,22 +65,22 @@ const HandlerCSV = (archivo, name) => {
       } else if (matchesDispositivos) {
         const result = `{
         "dispositivo": "${matchesDispositivos[1].trim().replace(/"/g, "")}",
-        "tipo":"${matchesDispositivos[2]}",      
-        "insercion":"${matchesDispositivos[3]}",      
-        "tamano_copiados":"${matchesDispositivos[4]}",      
-        "ficheros_copiados":"${matchesDispositivos[5]}",      
-        "ficheros_borrados":"${matchesDispositivos[6]}",      
+        "tipo":"${matchesDispositivos[3]}",      
+        "insercion":"${matchesDispositivos[4]}",      
+        "tamano_copiados":"${matchesDispositivos[5]}",      
+        "ficheros_copiados":"${matchesDispositivos[6]}",      
+        "ficheros_borrados":"${matchesDispositivos[7]}",      
         "pago":"${parseInt(
-          matchesDispositivos[7].replace("$", "")
-            ? matchesDispositivos[7].replace("$", "")
-            : 0
-        )}",      
-        "cobrado":"${parseInt(
           matchesDispositivos[8].replace("$", "")
             ? matchesDispositivos[8].replace("$", "")
             : 0
         )}",      
-        "comentario":"${matchesDispositivos[9].replace(/"/g, "")}"   
+        "cobrado":"${parseInt(
+          matchesDispositivos[9].replace("$", "")
+            ? matchesDispositivos[9].replace("$", "")
+            : 0
+        )}",      
+        "comentario":"${matchesDispositivos[10].replace(/"/g, "")}"   
       }`;
         const resultJson = JSON.parse(result);
         defaultData.dispositivos.push(resultJson);
