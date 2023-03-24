@@ -120,6 +120,5 @@ const HandlerCSV = (archivo, name) => {
     });
   });
 };
-/* HandlerCSV("public/csv/data.csv").then((res) => console.log(res)); */
 
 module.exports = HandlerCSV;

@@ -45,5 +45,5 @@ app.use(cardsRouter);
 app.use(mironesRouter);
 
 app.listen(app.get("port"), () => {
-  console.log("servidosr corriendo en el puerto", app.get("port"));
+  console.log("servidosr corriendo en el puerto, prueba", app.get("port"));
 });
