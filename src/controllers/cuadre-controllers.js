@@ -26,6 +26,8 @@ CuadreController.save = (req, res) => {
         ? { ...req.body.turno, trabajador1: `${req.body.turno.trabajador1}(S)` }
         : req.body.turno,
     dueño: req.body.dueño,
+    hojas: req.body.hojas,
+    made_by: req.body.made_by,
   };
   try {
     CuadreModels.save(data, (error, docs) => {
@@ -43,6 +45,19 @@ CuadreController.getMonth = (req, res) => {
   let mes = req.params.fecha;
   CuadreModels.getMonth(mes, (docs) => {
     res.json(docs);
+  });
+};
+
+CuadreController.getLastSell = (req, res) => {
+  CuadreModels.getLastSell((error, docs) => {
+    if (error) {
+      res.json({ error: true, message: "Error con la base de datos" });
+    }
+    res.json({
+      success: true,
+      message: "Dato obtenido satisfactoriamente",
+      data: docs,
+    });
   });
 };
 

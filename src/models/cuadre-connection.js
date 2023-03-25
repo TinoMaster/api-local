@@ -18,6 +18,13 @@ const cuadreSchema = new Schema({
     trabajador2: String,
   },
   dueño: Number,
+  hojas: {
+    bn: Number,
+    color: Number,
+    rest_bn: Number,
+    rest_color: Number,
+  },
+  made_by: String,
 });
 
 const CuadreModel = mongoose.model("Cuadre", cuadreSchema);

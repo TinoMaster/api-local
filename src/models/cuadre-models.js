@@ -33,6 +33,22 @@ CuadreModel.save = (data, cb) => {
   });
 };
 
+CuadreModel.getLastSell = (cb) => {
+  try {
+    cuadreConnections
+      .find()
+      .sort({ $natural: -1 })
+      .limit(1)
+      .exec((err, docs) => {
+        if (err) throw err;
+        cb(null, docs);
+      });
+  } catch (error) {
+    console.log(error);
+    cb(error, null);
+  }
+};
+
 CuadreModel.getMonth = (fechaToSearch, cb) => {
   const fecha = fechaToSearch.toString();
   const regex = new RegExp(`^([1-9]|1[0-9]|2[0-9]|3[0-1])-${fecha}`);
