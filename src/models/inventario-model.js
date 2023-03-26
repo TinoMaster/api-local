@@ -2,10 +2,16 @@ const inventarioConnection = require("./inventario-connection");
 const inventarioModel = () => {};
 
 inventarioModel.getInsumos = (cb) => {
-  inventarioConnection.find({ tipo: "insumos" }).exec((err, docs) => {
-    if (err) throw err;
-    cb(docs);
-  });
+  try {
+    inventarioConnection.find({ tipo: "insumos" }).exec((err, docs) => {
+      if (err) throw err;
+      cb(null, docs);
+      console.log(docs);
+    });
+  } catch (error) {
+    console.log(error);
+    cb(error, null);
+  }
 };
 
 inventarioModel.gethojas = (cb) => {
@@ -23,40 +29,50 @@ inventarioModel.getMediosBasicos = (cb) => {
 };
 
 inventarioModel.save = (data, _id, cb) => {
-  inventarioConnection.countDocuments({ _id: _id }).exec((err, count) => {
-    if (count === 0) {
-      inventarioConnection.create(data, (err) => {
-        if (err) throw err;
-        cb();
-      });
-    } else if (count === 1) {
-      inventarioConnection.findOneAndUpdate(
-        { _id: _id },
-        {
-          id: data.id,
-          nombre: data.nombre,
-          serie: data.serie,
-          modelo: data.modelo,
-          almacen: data.almacen,
-          local: data.local,
-          description: data.description,
-          tipo: data.tipo,
-          fecha: data.fecha,
-        },
-        (err) => {
+  try {
+    inventarioConnection.countDocuments({ _id: _id }).exec((err, count) => {
+      if (count === 0) {
+        inventarioConnection.create(data, (err, docs) => {
           if (err) throw err;
-          cb();
-        }
-      );
-    }
-  });
+          cb(null, docs);
+        });
+      } else if (count === 1) {
+        inventarioConnection.findOneAndUpdate(
+          { _id: _id },
+          {
+            id: data.id,
+            nombre: data.nombre,
+            serie: data.serie,
+            modelo: data.modelo,
+            almacen: data.almacen,
+            local: data.local,
+            description: data.description,
+            tipo: data.tipo,
+            fecha: data.fecha,
+          },
+          (err, docs) => {
+            if (err) throw err;
+            cb(null, docs);
+          }
+        );
+      }
+    });
+  } catch (error) {
+    console.log(error);
+    cb(error, null);
+  }
 };
 
 inventarioModel.delete = (id, cb) => {
-  inventarioConnection.deleteOne({ _id: id }).exec((err, docs) => {
-    if (err) throw err;
-    cb();
-  });
+  try {
+    inventarioConnection.findByIdAndDelete({ _id: id }).exec((err, docs) => {
+      if (err) throw err;
+      cb(null, docs);
+    });
+  } catch (error) {
+    console.log(error);
+    cb(error, null);
+  }
 };
 
 module.exports = inventarioModel;

@@ -4,7 +4,10 @@ const mongoose = require("mongoose"),
 
 const inventarioSchema = new Schema({
   id: Number,
-  nombre: String,
+  nombre: {
+    type: String,
+    unique: true,
+  },
   serie: String,
   modelo: String,
   almacen: Number,
