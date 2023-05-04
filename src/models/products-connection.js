@@ -5,7 +5,7 @@ const mongoose = require("mongoose"),
 const productSchema = new Shema({
   name: {
     type: String,
-    unique: true,
+    required: true,
   },
   category: String,
   provider: String,

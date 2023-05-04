@@ -2,20 +2,9 @@ const trabajadorModel = require("../models/trabajador-model");
 
 const trabajadorController = () => {};
 
-const AWS = require("aws-sdk");
 const hashPassword = require("../helpers/strategies/password.hash");
 const boom = require("@hapi/boom");
 const verifyPassword = require("../helpers/strategies/password.verify");
-
-const BucketName = process.env.BUCKET_NAME || "";
-const EndPoint = process.env.ENDPOINT || "";
-
-const spacesEndpoint = new AWS.Endpoint(
-  EndPoint
-); /* Estas cosas estan explicadas todas en la siguiente url https://www.youtube.com/watch?v=bYMT0KFuT1k&t=150s */
-const s3 = new AWS.S3({
-  endpoint: spacesEndpoint,
-});
 
 trabajadorController.getAll = (req, res) => {
   trabajadorModel.getAll((error, docs) => {
