@@ -34,7 +34,7 @@ CuadreController.save = (req, res) => {
       if (error) {
         res.json({ error: true, message: "internal error" });
       }
-      res.json(docs);
+      res.json({ success: true, docs });
     });
   } catch (error) {
     console.log(error);

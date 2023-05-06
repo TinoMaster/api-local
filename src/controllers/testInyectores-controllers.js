@@ -10,12 +10,11 @@ testInyectoresController.getTest = (req, res) => {
 
 testInyectoresController.save = (req, res) => {
   const id = req.body.id;
-  console.log(id);
   const data = req.body;
 
   testInyectoresModel.save(data, id, (err) => {
     if (err) throw err;
-    res.send(console.log("success"));
+    res.json({ success: true });
   });
 };
 

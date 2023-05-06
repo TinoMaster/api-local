@@ -6,7 +6,6 @@ inventarioModel.getInsumos = (cb) => {
     inventarioConnection.find({ tipo: "insumos" }).exec((err, docs) => {
       if (err) throw err;
       cb(null, docs);
-      console.log(docs);
     });
   } catch (error) {
     console.log(error);

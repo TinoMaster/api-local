@@ -1,0 +1,16 @@
+[
+  {
+    "_id": "a40e2cf6-e290-4469-acdd-5767ecfa8325",
+    "colId": "history",
+    "containerId": "",
+    "name": "http://localhost:5000/deudas",
+    "url": "http://localhost:5000/deudas",
+    "method": "GET",
+    "sortNum": 0,
+    "created": "2023-05-06T15:38:31.821Z",
+    "modified": "2023-05-06T15:38:31.821Z",
+    "headers": [],
+    "params": [],
+    "tests": []
+  }
+]
