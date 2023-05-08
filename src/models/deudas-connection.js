@@ -21,6 +21,12 @@ const deudasSchema = new Schema({
     isDone: Boolean,
     fecha: String,
   },
+  pagos: [
+    {
+      fecha: String,
+      cantidad: Number,
+    },
+  ],
 });
 
 const DeudasModel = mongoose.model("Deudas", deudasSchema);
