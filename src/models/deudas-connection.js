@@ -3,12 +3,16 @@ const mongoose = require("mongoose"),
   dbConfig = require("./db.config");
 
 const deudasSchema = new Schema({
-  creador: {
+  name: {
     type: String,
     required: true,
   },
+  creador: {
+    type: Array,
+    required: true,
+  },
   deudor: {
-    type: String,
+    type: Array,
     required: true,
   },
   acreedor: {
@@ -27,6 +31,7 @@ const deudasSchema = new Schema({
       cantidad: Number,
     },
   ],
+  comentario: Array,
 });
 
 const DeudasModel = mongoose.model("Deudas", deudasSchema);
